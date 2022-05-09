@@ -19,15 +19,20 @@ class CreateScreeningData
 
         if($frequencyType == HeadacheFrequencyType::daily->value)
         {
-            $screening->assigned_to = AssignedTo::cohortB;
+            $screening->assigned_to = $this->checkAge($screening->dob?->age) ? AssignedTo::cohortB : NULL;
             $screening->daily_frequency_headache = $data['daily_headache_frequency'];
         }
         else
         {
-            $screening->assigned_to = AssignedTo::cohortA;
+            $screening->assigned_to = $this->checkAge($screening->dob?->age) ? AssignedTo::cohortA : NULL;
         }
         $screening->save();
 
         return $screening;
+    }
+
+    private function checkAge(int $age): bool
+    {
+        return $age >= 18;
     }
 }

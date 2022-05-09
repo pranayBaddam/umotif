@@ -18,8 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/screening/create', [ScreeningController::class, 'create'])->name('screening.create');
-Route::post('/screening', [ScreeningController::class, 'store'])->name('screening.store');
+Route::controller(ScreeningController::class)->group(function () {
+    Route::get('/screenings/create', 'create')->name('screenings.create');
+    Route::post('/screenings', 'store')->name('screenings.store');
+    Route::get('/screenings/{id}', 'show')->name('screenings.show');
+    Route::get('/screenings', 'index')->name('screenings.index');
+});
 
 
 Route::get('/dashboard', function () {

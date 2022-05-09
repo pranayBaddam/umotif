@@ -22,7 +22,7 @@ class ScreeningFactory extends Factory
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'dob' => $this->faker->date(),
+            'dob' => $this->faker->date('Y-m-d', '2004-01-01'),
             'headache_frequency_type' => $this->faker->randomElement(HeadacheFrequencyType::cases()),
             'assigned_to' => $this->faker->randomElement(AssignedTo::cases()),
         ];

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('dob');
             $table->tinyInteger('headache_frequency_type');
             $table->tinyInteger('daily_frequency_headache')->nullable();
-            $table->tinyInteger('assigned_to');
+            $table->tinyInteger('assigned_to')->nullable();
             $table->timestamps();
         });
     }

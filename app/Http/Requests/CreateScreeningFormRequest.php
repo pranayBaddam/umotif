@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enum\HeadacheDailyFrequencyType;
 use App\Enum\HeadacheFrequencyType;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -28,9 +29,9 @@ class CreateScreeningFormRequest extends FormRequest
     {
         return [
             'first_name' => ['required', 'string', 'min:3', 'max:100'],
-            'dob' => ['required', 'date', 'before_or_equal:today'],
+            'dob' => ['required', 'date', 'before_or_equal:'. Carbon::now()->subYears(18)->format('Y-m-d')],
             'headache_frequency_type' => ['required', 'int', new Enum(HeadacheFrequencyType::class)],
-            'headache_daily_frequency' => ['nullable', 'int', new Enum(HeadacheDailyFrequencyType::class)],
+            'daily_headache_frequency' => ['required_if:headache_frequency_type,'.HeadacheFrequencyType::daily->value, new Enum(HeadacheDailyFrequencyType::class)],
         ];
     }
 
@@ -42,7 +43,8 @@ class CreateScreeningFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'headache_daily_frequency.required_if' => 'The daily headache frequency field is required when headache frequency type is '.HeadacheFrequencyType::daily->label(),
+            'daily_headache_frequency.required_if' => 'The daily headache frequency field is required when headache frequency type is '.HeadacheFrequencyType::daily->label(),
+            'dob.before_or_equal' => 'The participant(s) must be over 18 years of age.',
         ];
     }
 

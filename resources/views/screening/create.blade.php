@@ -11,7 +11,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('screening.store') }}">
+        <form method="POST" action="{{ route('screenings.store') }}">
             @csrf
 
             <!-- First Name -->
@@ -48,8 +48,8 @@
 
                 <!-- Daily Headache Frequency -->
                 <div class="mt-4" x-show="open">
-                    <x-label for="daily_headache_frequency" :value="__('Daily Headache Frequency')" :required="true"/>
-                    <x-select name="daily_headache_frequency" id="daily_headache_frequency" class="block mt-1 w-full">
+                    <x-label for="daily_headache_frequency" :value="__('Daily Headache Frequency')"/>
+                    <x-select name="daily_headache_frequency" id="daily_headache_frequency" x-bind:disabled="open == false" class="block mt-1 w-full">
                         <option value="">Select Daily Frequency...</option>
                         @foreach(\App\Enum\HeadacheDailyFrequencyType::cases() as $frequencyType)
                             <option
